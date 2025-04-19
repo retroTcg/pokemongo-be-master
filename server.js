@@ -35,6 +35,9 @@ const cors = (req, res, next) => {
 	next();
 };
 app.use(cors);
+app.options('*', (req, res) => {
+	res.sendStatus(200); // Preflight handled!
+  });
 app.use(express.json());
 app.use(
 	cookieSession({
