@@ -34,15 +34,33 @@ MongoClient.connect(
 // @route     GET api/v1/pokemon
 // @desc      Get all cards
 // @access    public
+//todo possibly put this back
+// router.get('/', async (req, res) => {
+// 	try {
+// 		// i have now inserted the api data in my database so we'll try to hit it that way
+// 		res.status(200).send(allPokemon);
+// 	} catch (error) {
+// 		console.log(error.message);
+// 		res.status(500).send('server error');
+// 	}
+// });
+
+//modified get that ensures connection happens first before attempting to retrieve mons
 router.get('/', async (req, res) => {
 	try {
-		// i have now inserted the api data in my database so we'll try to hit it that way
-		res.status(200).send(allPokemon);
+		const client = await MongoClient.connect(process.env.MONGO_DB, {
+			useUnifiedTopology: true,
+		});
+		const db = client.db('test');
+		const allPokemon = await db.collection('pokemon').find().toArray();
+		client.close();
+		res.status(200).json(allPokemon);
 	} catch (error) {
-		console.log(error.message);
+		console.error('Error fetching Pokémon:', error);
 		res.status(500).send('server error');
 	}
 });
+
 
 // @route     GET api/v1/pokemon/:deckname
 // @desc      get starter deck by name
