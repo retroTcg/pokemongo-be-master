@@ -17,7 +17,6 @@ MongoClient.connect(
 		if (err) throw err;
 		let pokemonDB = db.db('test');
 		allPokemon = await pokemonDB.collection('pokemon').find().toArray();
-		console.log("\nAttempting to log 'allPokemon': \n" + allPokemon + " \nas string:" + JSON.stringify(allPokemon));
 		blackout = await pokemonDB.collection('blackout').find().toArray();
 		waterblast = await pokemonDB.collection('waterblast').find().toArray();
 		brushfire = await pokemonDB.collection('brushfire').find().toArray();
