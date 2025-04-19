@@ -17,7 +17,6 @@ MongoClient.connect(
 		if (err) throw err;
 		let pokemonDB = db.db('test');
 		allPokemon = await pokemonDB.collection('pokemon').find().toArray();
-		console.log("\nAttempting to log 'allPokemon': \n" + allPokemon + " \nas string:" + JSON.stringify(allPokemon));
 		blackout = await pokemonDB.collection('blackout').find().toArray();
 		waterblast = await pokemonDB.collection('waterblast').find().toArray();
 		brushfire = await pokemonDB.collection('brushfire').find().toArray();
@@ -45,16 +44,13 @@ MongoClient.connect(
 // 	}
 // });
 
-
-// @route     GET api/v1/pokemon
-// @desc      Get all cards modified get that ensures connection happens first before retrieve all mons
-// @access    public
+//modified get that ensures connection happens first before attempting to retrieve mons
 router.get('/', async (req, res) => {
 	try {
 		const client = await MongoClient.connect(process.env.MONGO_DB, {
 			useUnifiedTopology: true,
 		});
-		const db = client.db('tcg');
+		const db = client.db('test');
 		const allPokemon = await db.collection('pokemon').find().toArray();
 		client.close();
 		res.status(200).json(allPokemon);
