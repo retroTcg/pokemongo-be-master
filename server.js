@@ -23,6 +23,7 @@ const cors = (req, res, next) => {
 		'http://allegedlytcg.s3-website.us-east-2.amazonaws.com',
 		'https://pr-49.d36zl7upiy9z6s.amplifyapp.com',
 		'https://nextemon.vercel.app',
+		'https://retrotcg.netlify.app'
 	];
 	let origin = req.headers.origin;
 	if (whitelist.indexOf(origin) > -1) {
